@@ -11,7 +11,7 @@
 	const time = readable(new Date(), function start(set) {
 		const interval = setInterval(() => {
 			set(new Date());
-		}, 1000);
+		}, 1_000); // each second
 
 		return function stop() {
 			clearInterval(interval);
@@ -34,10 +34,11 @@
 </script>
 
 <header>
+	<span id='cat'>🐈</span>
 	<div>
-		<span>🐈</span><span>{today('fr-FR').toUpperCase()}</span>
+		<span>{today('fr-FR').toUpperCase()}</span>
+		<span>{formatter.format($time)}</span>
 	</div>
-	<span>{formatter.format($time)}</span>
 </header>
 
 <main>
@@ -47,20 +48,32 @@
 </main>
 
 <style>
-	header {
+		header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
 		padding: 0 1rem;
 		font-size: 64px;
 		font-weight: bold;
 		font-family: Inter,sans-serif;
+		margin-bottom: 20px;
 	}
+
+		header > div {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		#cat{
+				font-size: 1.5em;
+				margin-right: 35px;
+		}
 
 	main {
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
 		align-items: center;
 		padding: 0 1rem;
+		height: 80%;
 	}
 </style>
