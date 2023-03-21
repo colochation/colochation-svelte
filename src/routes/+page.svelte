@@ -1,11 +1,10 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-	import { tick } from 'svelte';
+<script lang='ts'>
+	import { onMount, tick } from 'svelte';
 	import { readable } from 'svelte/store';
-	import Column from './Column.svelte'
+	import Column from './Housework.svelte';
 
 	onMount(async () => {
-		await tick()
+		await tick();
 	});
 
 	const time = readable(new Date(), function start(set) {
@@ -25,11 +24,11 @@
 	});
 
 	function today(local: string): string {
-		const today = new Date()
+		const today = new Date();
 		return `${today.toLocaleString(local, { weekday: 'long' })}
 		${today.getDate()}
 		${today.toLocaleString(local, { month: 'long' })}
-		${today.getFullYear()}`
+		${today.getFullYear()}`;
 	}
 </script>
 
@@ -48,32 +47,31 @@
 </main>
 
 <style>
-		header {
-		display: flex;
-		align-items: center;
-		padding: 0 1rem;
-		font-size: 64px;
-		font-weight: bold;
-		font-family: Inter,sans-serif;
-		margin-bottom: 20px;
-	}
+    header {
+        display: flex;
+        align-items: center;
+        padding: 0 40px;
+        font-size: 64px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
 
-		header > div {
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-		}
+    header > div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
 
-		#cat{
-				font-size: 1.5em;
-				margin-right: 35px;
-		}
+    #cat {
+        font-size: 1.5em;
+        margin-right: 35px;
+    }
 
-	main {
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		padding: 0 1rem;
-		height: 80%;
-	}
+    main {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 1rem;
+        height: 80%;
+    }
 </style>
