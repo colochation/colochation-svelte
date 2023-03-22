@@ -61,4 +61,12 @@
 	{/each}
 </Column>
 
+<style>
+    h2 {
+        font-weight: normal;
+        font-size: 14px;
+        margin: 0;
+        margin-top: 30px;
+    }
+</style>
 
