@@ -2,6 +2,8 @@
 	import GuestCard from './GuestCard.svelte';
 	import type { Guest, GuestsGroupedByDay } from './guest.entity';
 
+	export let guests: Guest[] = [];
+
 	function today(): Date {
 		return new Date(new Date().setMinutes(0));
 	};
@@ -10,17 +12,6 @@
 		return new Date(today().setDate(today().getDate() + 1));
 	}
 
-	function inOneWeek(): Date {
-		return new Date(today().setDate(today().getDate() + 7));
-	}
-
-	let guests: Guest[] = [
-		{ name: 'Léa <3', when: new Date(today().setHours(18)) },
-		{ name: 'Charles', when: new Date(tomorrow().setHours(18)) },
-		{ name: 'Sananes', when: new Date(tomorrow().setHours(23)) },
-		{ name: '?', when: new Date(inOneWeek().setHours(18)) },
-		{ name: '?', when: new Date(inOneWeek().setHours(23)) }
-	];
 	const formatter = new Intl.DateTimeFormat('fr-FR', {
 		weekday: 'long',
 		month: 'long',
