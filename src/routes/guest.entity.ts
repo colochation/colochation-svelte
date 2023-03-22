@@ -3,4 +3,8 @@ interface Guest {
 	when: Date;
 }
 
-export type { Guest };
+interface GuestsGroupedByDay {
+	[day: string]: Guest[];
+}
+
+export type { Guest, GuestsGroupedByDay };

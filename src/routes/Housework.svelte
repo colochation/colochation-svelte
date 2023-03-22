@@ -15,7 +15,7 @@
 			assigned: 'Nathan'
 		},
 		{
-			title: 'Faire le lit',
+			title: 'Nettoyer la salle de bain',
 			status: 'in_progress',
 			assigned: 'Nathan'
 		},
