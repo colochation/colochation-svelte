@@ -1,6 +1,6 @@
 <script lang='ts'>
-	import Homework from './Housework-card.svelte';
-	import type houseworkStatus from './Status.svelte';
+	import HouseworkCard from './HouseworkCard.svelte';
+	import type houseworkStatus from './StatusPill.svelte';
 
 	export type housework = {
 		title: string;
@@ -32,7 +32,7 @@
 	<ul>
 		{#each homeworks as homework}
 			<li>
-				<Homework task={homework}></Homework>
+				<HouseworkCard task={homework}></HouseworkCard>
 			</li>
 		{/each}
 	</ul>

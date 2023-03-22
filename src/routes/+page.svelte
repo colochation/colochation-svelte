@@ -2,6 +2,7 @@
 	import { onMount, tick } from 'svelte';
 	import { readable } from 'svelte/store';
 	import Column from './Housework.svelte';
+	import Grocerylist from './Grocerylist.svelte';
 
 	onMount(async () => {
 		await tick();
@@ -42,7 +43,7 @@
 
 <main>
 	<Column></Column>
-	<Column></Column>
+	<Grocerylist></Grocerylist>
 	<Column></Column>
 </main>
 

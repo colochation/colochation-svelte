@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import housework from './Housework.svelte';
-	import Status from './Status.svelte';
+	import StatusPill from './StatusPill.svelte';
 
 	export let task: housework = {
 		title: '',
@@ -11,9 +11,9 @@
 </script>
 
 <section class='card'>
-	<h2>{task.title}</h2>
+	<h2>{task.title.trim()}</h2>
 	<section>
-		<Status status={task.status}></Status>
+		<StatusPill status={task.status}></StatusPill>
 		<span>{task.assigned}</span>
 	</section>
 </section>
