@@ -1,6 +1,7 @@
 <script lang='ts'>
 	import GuestCard from './GuestCard.svelte';
 	import type { Guest, GuestsGroupedByDay } from './guest.type';
+	import Column from './Column.svelte';
 
 	export let guests: Guest[] = [];
 
@@ -44,8 +45,10 @@
 	}
 </script>
 
-<section>
-	<h1><span class='icon'>🍻</span> Invités</h1>
+<Column
+	icon='🍻'
+	title='Invités'
+>
 	{#each Object.entries(displayed) as [day, guests]}
 		<h2>{formatDay(day)}</h2>
 		<ul>
@@ -56,44 +59,6 @@
 			{/each}
 		</ul>
 	{/each}
-</section>
-
-<style>
-    section {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        background: linear-gradient(163.44deg, rgba(211, 82, 201, 0.3) 1.85%, rgba(28, 228, 255, 0.3) 95.81%);
-        border-radius: 3px;
-        min-width: 400px;
-        padding: 20px 25px;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    h1 {
-        font-weight: bold;
-        font-size: 20px;
-        margin: 0;
-        display: flex;
-        align-items: center;
-    }
-
-    h2 {
-        font-weight: normal;
-        font-size: 14px;
-        margin: 0;
-        margin-top: 30px;
-    }
-
-    .icon {
-        font-size: 40px;
-        margin-right: 10px;
-    }
-</style>
+</Column>
 
 
