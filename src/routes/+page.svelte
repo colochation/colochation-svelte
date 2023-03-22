@@ -1,12 +1,8 @@
 <script lang='ts'>
-	import { onMount, tick } from 'svelte';
 	import { readable } from 'svelte/store';
-	import Column from './Housework.svelte';
+	import Housework from './Housework.svelte';
 	import Grocerylist from './Grocerylist.svelte';
-
-	onMount(async () => {
-		await tick();
-	});
+	import Guests from './Guests.svelte';
 
 	const time = readable(new Date(), function start(set) {
 		const interval = setInterval(() => {
@@ -42,9 +38,9 @@
 </header>
 
 <main>
-	<Column></Column>
-	<Grocerylist></Grocerylist>
-	<Column></Column>
+	<Housework />
+	<Grocerylist />
+	<Guests />
 </main>
 
 <style>
