@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import type { Guest } from './guest.entity';
+	import type { Guest } from './guest.type';
 
 	export let guest: Guest = {
 		name: '',

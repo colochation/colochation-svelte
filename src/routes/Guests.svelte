@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import GuestCard from './GuestCard.svelte';
-	import type { Guest, GuestsGroupedByDay } from './guest.entity';
+	import type { Guest, GuestsGroupedByDay } from './guest.type';
 
 	export let guests: Guest[] = [];
 

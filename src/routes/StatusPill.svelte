@@ -1,5 +1,5 @@
 <script lang='ts'>
-	export type houseworkStatus = 'to_do' | 'in_progress' | 'done'
+	import type { houseworkStatus } from './housework.type';
 
 	export let status: houseworkStatus = 'to_do';
 

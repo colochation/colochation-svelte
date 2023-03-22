@@ -1,20 +1,14 @@
 <script lang='ts'>
 	import GrocerylistCard from './GrocerylistCard.svelte';
+	import type { grocerylistItem } from './grocery-list.type';
 
-	type grocerylistItem = {
-		name: string,
-		checked: boolean
-	}
-	const grocerylistItems: grocerylistItem[] = [
-		{ name: 'Chips', checked: false },
-		{ name: 'Bières', checked: false }
-	];
+	export let groceryList: grocerylistItem[] = [];
 </script>
 
 <section>
 	<h1><span class='icon'>🛒</span> Liste de courses</h1>
 	<ul>
-		{#each grocerylistItems as item}
+		{#each groceryList as item}
 			<li>
 				<GrocerylistCard item={item}></GrocerylistCard>
 			</li>

@@ -1,38 +1,17 @@
 <script lang='ts'>
 	import HouseworkCard from './HouseworkCard.svelte';
-	import type houseworkStatus from './StatusPill.svelte';
+	import type { housework } from './housework.type';
 
-	export type housework = {
-		title: string;
-		status: houseworkStatus;
-		assigned: string;
-	};
 
-	const homeworks: housework[] = [
-		{
-			title: 'Faire la vaisselle',
-			status: 'to_do',
-			assigned: 'Nathan'
-		},
-		{
-			title: 'Nettoyer la salle de bain',
-			status: 'in_progress',
-			assigned: 'Nathan'
-		},
-		{
-			title: 'Passer l\'aspirateur',
-			status: 'done',
-			assigned: 'Theo'
-		}
-	];
+	export let tasks: housework[] = [];
 </script>
 
 <section>
 	<h1><span class='icon'>🧹</span> Tâches ménagères</h1>
 	<ul>
-		{#each homeworks as homework}
+		{#each tasks as task}
 			<li>
-				<HouseworkCard task={homework}></HouseworkCard>
+				<HouseworkCard task={task} />
 			</li>
 		{/each}
 	</ul>
