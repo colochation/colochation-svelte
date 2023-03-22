@@ -6,8 +6,8 @@
 		checked: boolean
 	}
 	const grocerylistItems: grocerylistItem[] = [
-		{ name: 'chips', checked: false },
-		{ name: 'bières', checked: false }
+		{ name: 'Chips', checked: false },
+		{ name: 'Bières', checked: false }
 	];
 </script>
 
@@ -42,6 +42,8 @@
         font-weight: bold;
         font-size: 20px;
         margin: 0;
+        display: flex;
+        align-items: center;
     }
 
     .icon {

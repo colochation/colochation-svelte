@@ -20,7 +20,7 @@
 
 	const formatter = new Intl.DateTimeFormat('fr', {
 		hour12: false,
-		hour: 'numeric',
+		hour: '2-digit',
 		minute: '2-digit'
 	});
 

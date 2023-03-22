@@ -58,9 +58,12 @@
         font-weight: bold;
         font-size: 20px;
         margin: 0;
+        display: flex;
+        align-items: center;
     }
 
     .icon {
         font-size: 40px;
+        margin-right: 10px;
     }
 </style>
