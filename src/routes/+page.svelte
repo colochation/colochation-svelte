@@ -1,28 +1,20 @@
 <script lang='ts'>
-	import { readable } from 'svelte/store';
 	import Housework from './Housework.svelte';
 	import Grocerylist from './Grocerylist.svelte';
 	import Guests from './Guests.svelte';
 	import type { Guest } from './guest.type';
 	import type { grocerylistItem } from './grocery-list.type';
-	import type { housework } from './housework.type';
+	import { time } from './time';
+	// noinspection TypeScriptCheckImport
+	import type { PageData } from './$types';
 
-	const time = readable(new Date(), function start(set) {
-		const interval = setInterval(() => {
-			set(new Date());
-		}, 1_000); // each second
-
-		return function stop() {
-			clearInterval(interval);
-		};
-	});
 	const clockFormatter = new Intl.DateTimeFormat('fr', {
 		hour12: false,
 		hour: '2-digit',
 		minute: '2-digit'
 	});
 
-	const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
+	const dateFormatter = new Intl.DateTimeFormat('fr', {
 		weekday: 'long',
 		month: 'long',
 		day: 'numeric',
@@ -54,23 +46,7 @@
 		{ name: 'Bières', checked: false }
 	];
 
-	const houseworks: housework[] = [
-		{
-			title: 'Faire la vaisselle',
-			status: 'to_do',
-			assigned: 'Nathan'
-		},
-		{
-			title: 'Nettoyer la salle de bain',
-			status: 'in_progress',
-			assigned: 'Nathan'
-		},
-		{
-			title: 'Passer l\'aspirateur',
-			status: 'done',
-			assigned: 'Theo'
-		}
-	];
+	export let data: PageData;
 
 </script>
 
@@ -83,7 +59,7 @@
 </header>
 
 <main>
-	<Housework tasks={houseworks} />
+	<Housework tasks={data.chores} />
 	<Grocerylist groceryList={groceryList} />
 	<Guests guests={guests} />
 </main>
