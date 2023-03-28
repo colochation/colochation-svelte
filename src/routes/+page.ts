@@ -2,8 +2,8 @@ import type { PageLoad } from './$types';
 import { api } from './api';
 
 export const load = (async ({ fetch }) => {
-	const res = await fetch(api.chores);
-	const chores = await res.json();
+	const resChores = await fetch(api.chores);
 
-	return { chores };
+	const resGroceryList = await fetch(api.groceries);
+	return { chores: await resChores.json(), groceries: await resGroceryList.json() };
 }) as PageLoad;

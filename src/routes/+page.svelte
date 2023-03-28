@@ -41,12 +41,9 @@
 		{ name: '?', when: new Date(inOneWeek().setHours(23)) }
 	];
 
-	const groceryList: grocerylistItem[] = [
-		{ name: 'Chips', checked: false },
-		{ name: 'Bières', checked: false }
-	];
 
 	export let data: PageData;
+
 
 </script>
 
@@ -60,7 +57,7 @@
 
 <main>
 	<Housework tasks={data.chores} />
-	<Grocerylist groceryList={groceryList} />
+	<Grocerylist groceryList={data.groceries} />
 	<Guests guests={guests} />
 </main>
 

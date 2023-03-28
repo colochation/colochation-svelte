@@ -1,5 +1,5 @@
 type grocerylistItem = {
-	name: string;
+	content: string;
 	checked: boolean;
 };
 
