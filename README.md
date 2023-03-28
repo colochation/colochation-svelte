@@ -1,38 +1,54 @@
-# create-svelte
+# 🐈 Colochation - front
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+![git_cat](https://media.giphy.com/media/129NVCr1UfsGTS/giphy.gif)
 
-## Creating a project
+Colochation est une web application qui permet d'avoir une vue d'ensemble sur la vie de sa colocation.
 
-If you're seeing this, you've probably already done this step. Congrats!
+Ce repository est le front utilisant [Svelte](https://svelte.dev/) en TypeScript.
+
+## Installation
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm install
 ```
 
-## Developing
+## Démarrage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Développement
+
+Après avoir installé les dépendances avec `npm install`, lancer un serveur de développement :
 
 ```bash
 npm run dev
 
-# or start the server and open the app in a new browser tab
+# ou ouvrir l'application dans le navigateur
 npm run dev -- --open
 ```
 
-## Building
+### Production
 
-To create a production version of your app:
+Construire une version de production :
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Visualiser un aperçu de la version de production avec `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+> Voir les [adapters](https://kit.svelte.dev/docs/adapters) svelte pour le déploiement
+
+## Fonctionnalités de l’application
+
+- Lister les tâches ménagères à effectuer
+- Obtenir la liste des courses à faire
+- Visualiser les prochains invités
+
+## Versioning
+
+Aucun workflow n'est imposé. La seule branche protégée est `main` pour laquelle il doit y avoir une Pull Request avant
+de merge.
+
+## Auteurs 🪶
+
+- Théo - [@NightTheo](https://github.com/NightTheo)
+- [@nathan-dev-dot](https://github.com/nathan-dev-dot)
