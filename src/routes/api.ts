@@ -1,4 +1,6 @@
-const base = 'http://localhost:8080';
+import { env } from '$env/dynamic/public';
+
+const base = env.PUBLIC_API_BASE_URL;
 export const api = {
 	base: base,
 	chores: base + '/chores',
