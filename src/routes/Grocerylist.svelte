@@ -4,7 +4,6 @@
 	import Column from './Column.svelte';
 
 	export let groceryList: grocerylistItem[] = [];
-	console.log(groceryList)
 </script>
 
 <Column

@@ -2,8 +2,6 @@
 	import Housework from './Housework.svelte';
 	import Grocerylist from './Grocerylist.svelte';
 	import Guests from './Guests.svelte';
-	import type { Guest } from './guest.type';
-	import type { grocerylistItem } from './grocery-list.type';
 	import { time } from './time';
 	// noinspection TypeScriptCheckImport
 	import type { PageData } from './$types';
@@ -20,28 +18,7 @@
 		day: 'numeric',
 		year: 'numeric'
 	});
-
-	function today(): Date {
-		return new Date(new Date().setMinutes(0));
-	};
-
-	function tomorrow(): Date {
-		return new Date(today().setDate(today().getDate() + 1));
-	}
-
-	function inOneWeek(): Date {
-		return new Date(today().setDate(today().getDate() + 7));
-	}
-
-	const guests: Guest[] = [
-		{ name: 'Léa', when: new Date(today().setHours(18)) },
-		{ name: 'Charles', when: new Date(tomorrow().setHours(18)) },
-		{ name: 'Sananes', when: new Date(tomorrow().setHours(23)) },
-		{ name: '?', when: new Date(inOneWeek().setHours(18)) },
-		{ name: '?', when: new Date(inOneWeek().setHours(23)) }
-	];
-
-
+	
 	export let data: PageData;
 
 
@@ -50,7 +27,7 @@
 <header>
 	<span id='cat'>🐈</span>
 	<div>
-		<span>{dateFormatter.format(new Date()).toUpperCase()}</span>
+		<span>{dateFormatter.format($time).toUpperCase()}</span>
 		<span>{clockFormatter.format($time)}</span>
 	</div>
 </header>
@@ -58,7 +35,7 @@
 <main>
 	<Housework tasks={data.chores} />
 	<Grocerylist groceryList={data.groceries} />
-	<Guests guests={guests} />
+	<Guests guests={data.guests} />
 </main>
 
 <style>
