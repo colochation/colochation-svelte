@@ -19,8 +19,8 @@ services:
 
   spring-colochation-api:
     build:
-      context: ../colochation-back
-      dockerfile: ../colochation-back/Dockerfile
+      context: ${COLOCHATION_API_PATH}
+      dockerfile: ${COLOCHATION_API_PATH}/Dockerfile
       target: runner
     image: colochation-api:0.0.1
     restart: unless-stopped

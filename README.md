@@ -6,17 +6,41 @@ Colochation est une web application qui permet d'avoir une vue d'ensemble sur la
 
 Ce repository est le front utilisant [Svelte](https://svelte.dev/) en TypeScript.
 
-## Installation
+## Installation 🛌
+
+Le front devra communiquer avec l'api REST de colochation.
+Assurez vous de l'installer avant de commencer.
+Voir [colochation-spring](https://github.com/colochation/colochation-spring)
+
+### 1. Seulement Colochation Front 
+> Il faudra lancer l'api REST indépendamment
+
+Renommer le fichier `.env.exemple` par `.env` et remplacer les variables.
+Puis lancer l'installation via npm :
 
 ```bash
 npm install
 ```
 
+### 2. ...ou avec Docker Compose 🐳
+
+Cloner l'[api colochation](https://github.com/colochation/colochation-spring).
+Renommer le fichier `.env.exemple` par `.env` et remplacer les variables.
+
+Mettre le chemin (relatif ou absolu) du projet colochation-spring dans la variable `COLOCHATION_API_PATH`.
+Par exemple si vous avez cloné le projet dans le même dossier que colochation-svelte :
+```
+.
+├── colochation-svelte
+└── colochation-spring
+```
+Vous aurez dans le fichier `.env`: `COLOCHATION_API_PATH=../colochation-spring`
+
 ## Démarrage
 
 ### Développement
 
-Après avoir installé les dépendances avec `npm install`, lancer un serveur de développement :
+Après avoir installé les dépendances avec `npm install` et l'api REST (voir installation) lancer un serveur de développement :
 
 ```bash
 npm run dev
@@ -24,24 +48,27 @@ npm run dev
 # ou ouvrir l'application dans le navigateur
 npm run dev -- --open
 ```
+### Docker compose
+
+Après avoir suivit l'étape d'installation `2. ...ou avec Docker Compose`, lancer docker compose
+```bash
+docker compose up 
+```
 
 ### Production
 
 Construire une version de production :
 
 ```bash
-npm run build
+npm run build && node build/index.js
 ```
-
-Visualiser un aperçu de la version de production avec `npm run preview`.
-
-> Voir les [adapters](https://kit.svelte.dev/docs/adapters) svelte pour le déploiement
 
 ## Fonctionnalités de l’application
 
-- Lister les tâches ménagères à effectuer
-- Obtenir la liste des courses à faire
-- Visualiser les prochains invités
+- [x] Lister les tâches ménagères à effectuer
+- [x] Obtenir la liste des courses à faire
+- [x] Visualiser les prochains invités
+- [ ] Ajouter une tâche ménagère à réaliser
 
 ## Versioning
 
