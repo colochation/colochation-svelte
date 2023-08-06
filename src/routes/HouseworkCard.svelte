@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import housework from './Housework.svelte';
+	import type { housework } from './housework.type';
 
 	export let task: housework = {
 		title: '',
