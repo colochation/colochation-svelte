@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 	import type { housework } from '../housework.type';
 	import MobileHouseworkCard from './MobileHouseworkCard.svelte';
+	import AddHouseworkCta from './AddHouseworkCta.svelte';
 
 	export let data: PageData;
 	let newTask: housework | null = null;
@@ -18,6 +19,8 @@
 		</li>
 	{/each}
 </ul>
+<AddHouseworkCta></AddHouseworkCta>
+
 
 <style>
 	h1 {
