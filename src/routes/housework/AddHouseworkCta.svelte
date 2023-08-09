@@ -1,8 +1,15 @@
 <script>
 	import Add from '$lib/assets/add.svg'
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	function dispatchClick() {
+		dispatch('click')
+	}
 </script>
 
-<button>
+<button on:click={dispatchClick}>
 	<img
 		src='{Add}'
 	/>

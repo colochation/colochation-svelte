@@ -4,10 +4,16 @@
 	import type { housework } from '../housework.type';
 	import MobileHouseworkCard from './MobileHouseworkCard.svelte';
 	import AddHouseworkCta from './AddHouseworkCta.svelte';
+	import AddHouseWorkDialog from './AddHouseWorkDialog.svelte';
 
 	export let data: PageData;
 	let newTask: housework | null = null;
 	export let tasks: housework[] = data.chores;
+
+	let showDialog = false;
+	function onClickCta(event: CustomEvent) {
+		showDialog = true
+	}
 </script>
 
 
@@ -19,7 +25,8 @@
 		</li>
 	{/each}
 </ul>
-<AddHouseworkCta></AddHouseworkCta>
+<AddHouseworkCta on:click={onClickCta} ></AddHouseworkCta>
+<AddHouseWorkDialog bind:showDialog></AddHouseWorkDialog>
 
 
 <style>
