@@ -1,12 +1,17 @@
 <script lang="ts">
 	let icon='🧔';
+
+	const housemates = ['Theo', 'Nathan'];
+	export let selected = '';
 </script>
 <span>
 	{icon}
-	<select>
+	<select bind:value={selected}>
 		<option value="" disabled selected hidden>Personne assignée</option>
-		<option>Theo</option>
-		<option>Nathan</option>
+		{#each housemates as mate}
+			<option value={mate}>{mate}</option>
+		{/each}
+
 	</select>
 </span>
 

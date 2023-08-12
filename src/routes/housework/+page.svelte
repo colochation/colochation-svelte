@@ -14,6 +14,14 @@
 	function onClickCta(event: CustomEvent) {
 		showDialog = true
 	}
+
+	function newChoreCreated(event: CustomEvent<housework>) {
+		tasks = [newTask, ...tasks];
+	}
+
+	function creationError(event: CustomEvent<Response>) {
+		// TODO handle error
+	}
 </script>
 
 
@@ -26,17 +34,23 @@
 		<li><MobileHouseworkCard task={task} /></li>
 	{/each}
 </ul>
-<OpenAddHouseworkButton on:click={onClickCta} ></OpenAddHouseworkButton>
+{#if !showDialog}
+	<OpenAddHouseworkButton on:click={onClickCta} ></OpenAddHouseworkButton>
+{/if}
+
 <AddHouseWorkDialog
 	bind:showDialog
 	bind:task={newTask}
+	on:created={newChoreCreated}
+	on:error={creationError}
 ></AddHouseWorkDialog>
 
 
 <style>
 	h1 {
-			font-size: 30px;
+			font-size: 25px;
 			margin-left: 20px;
+			font-weight: bold;
 	}
 
 	.icon {

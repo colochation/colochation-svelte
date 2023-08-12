@@ -3,6 +3,8 @@
 	import AddHouseworkButton from './AddHouseworkButton.svelte';
 	import AssignedSelector from './AssignedSelector.svelte';
 	import type { housework } from '../housework.type';
+	import { api } from '../api';
+	import { createEventDispatcher } from 'svelte';
 
 	export let task: housework = {
 		title: '',
@@ -15,8 +17,17 @@
 	$: if(dialog && showDialog) dialog.showModal()
 	$: if(dialog && !showDialog) dialog.close()
 
-	function submit() {
-		alert("submit form !");
+	const dispatch = createEventDispatcher();
+
+	async function handleSubmit() {
+		// TODO not submit if title empty or nobody selected
+		const response = await fetch(api.chores, { method: 'POST', body: JSON.stringify(task) })
+		if(response.status === 201) { // CREATED
+			dispatch('created', task)
+			showDialog = false;
+		} else {
+			dispatch('error', response)
+		}
 	}
 
 	function escapeDialog(event: KeyboardEvent): void {
@@ -41,10 +52,10 @@
 				on:click|self={() => dialog.close()}
 				on:keyup={escapeDialog}
 >
-	<form on:submit={() => submit()}>
-		<input bind:value={task.title} placeholder='Nom de la tâche'>
+	<form on:submit|preventDefault={handleSubmit}>
+		<input bind:value={task.title} placeholder='Nom de la tâche' autofocus>
 		<fieldset>
-			<AssignedSelector></AssignedSelector>
+			<AssignedSelector bind:selected={task.assigned}></AssignedSelector>
 			<AddHouseworkButton></AddHouseworkButton>
 		</fieldset>
 	</form>
@@ -72,6 +83,7 @@
 	form {
 			display: flex;
 			flex-direction: column;
+			height: 100%;
 	}
 
 	fieldset {

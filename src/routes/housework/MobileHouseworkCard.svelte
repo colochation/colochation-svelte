@@ -3,13 +3,14 @@
 	import type { housework } from '../housework.type';
 
 	export let task: housework = { title: '', assigned: '', toDo: true }
+	$: checked = task.toDo === false;
 
 	$: titleIsEmpty = task.title === '';
 	$: titleDisplayed = titleIsEmpty ? 'Nom de la tâche' : task.title.trim();
 </script>
 
 <section class='card'>
-	<input type='checkbox' bind:checked={task.toDo} />
+	<input type='checkbox' bind:checked={checked} />
 	<h2 class={titleIsEmpty ? 'newTask' : ''}>{titleDisplayed}</h2>
 	<span>{task.assigned}</span>
 	<hr/>

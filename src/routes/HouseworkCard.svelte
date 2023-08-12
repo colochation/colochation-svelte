@@ -7,10 +7,12 @@
 		assigned: ''
 	};
 
+	$: checked = task.toDo === false;
+
 </script>
 <section class='card'>
 	<section>
-		<input type='checkbox' bind:checked={task.toDo} />
+		<input type='checkbox' bind:checked={checked} />
 		<h2>{task.title.trim()}</h2>
 	</section>
 	<span>{task.assigned}</span>
