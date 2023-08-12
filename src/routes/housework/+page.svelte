@@ -3,14 +3,14 @@
 	import type { PageData } from './$types';
 	import type { housework } from '../housework.type';
 	import MobileHouseworkCard from './MobileHouseworkCard.svelte';
-	import AddHouseworkCta from './AddHouseworkCta.svelte';
+	import OpenAddHouseworkButton from './OpenAddHouseworkButton.svelte';
 	import AddHouseWorkDialog from './AddHouseWorkDialog.svelte';
 
 	export let data: PageData;
-	let newTask: housework | null = null;
 	export let tasks: housework[] = data.chores;
 
 	let showDialog = false;
+	let newTask: housework = { title: '', assigned: '', toDo: true }
 	function onClickCta(event: CustomEvent) {
 		showDialog = true
 	}
@@ -19,14 +19,18 @@
 
 <h1><span class='icon'>🧹</span> Tâches ménagères</h1>
 <ul>
+	{#if showDialog}
+		<li><MobileHouseworkCard task={newTask} /></li>
+	{/if}
 	{#each tasks as task}
-		<li>
-			<MobileHouseworkCard task={task} />
-		</li>
+		<li><MobileHouseworkCard task={task} /></li>
 	{/each}
 </ul>
-<AddHouseworkCta on:click={onClickCta} ></AddHouseworkCta>
-<AddHouseWorkDialog bind:showDialog></AddHouseWorkDialog>
+<OpenAddHouseworkButton on:click={onClickCta} ></OpenAddHouseworkButton>
+<AddHouseWorkDialog
+	bind:showDialog
+	bind:task={newTask}
+></AddHouseWorkDialog>
 
 
 <style>

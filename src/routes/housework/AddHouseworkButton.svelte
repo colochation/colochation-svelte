@@ -3,28 +3,27 @@
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
-
-	function dispatchClick() {
-		dispatch('click')
-	}
 </script>
 
-<button on:click={dispatchClick}>
+<button type='submit'>
 	<img
+		alt='Add icon'
 		src='{Add}'
 	/>
 </button>
 
 <style>
 	button {
-			background-color: rgba(69, 199, 48, 0.70);
+			background-color: #45C730B2;
 			border: none;
-			height: 80px;
-			width: 80px;
+			height: 50px;
+			width: 50px;
 			border-radius: 50px;
-			position: fixed;
-      left: 50%;
-			bottom: 20%;
-      margin-left: -40px;
   }
+
+	img {
+			height: 25px;
+			width: 25px;
+			margin: auto auto;
+	}
 </style>
