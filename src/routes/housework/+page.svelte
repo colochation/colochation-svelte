@@ -10,17 +10,27 @@
 	export let tasks: housework[] = data.chores;
 
 	let showDialog = false;
-	let newTask: housework = { title: '', assigned: '', toDo: true }
-	function onClickCta(event: CustomEvent) {
+	function emptyTask(): housework {
+		return {
+			title: '',
+			toDo: true,
+			assigned: ''
+		}
+	};
+	let newTask = emptyTask();
+	function onClickCta() {
 		showDialog = true
 	}
 
 	function newChoreCreated(event: CustomEvent<housework>) {
-		tasks = [newTask, ...tasks];
+		const createdTask: housework = event.detail;
+		tasks = [structuredClone(createdTask), ...tasks];
+		newTask = emptyTask();
 	}
 
 	function creationError(event: CustomEvent<Response>) {
 		// TODO handle error
+		console.log(event.detail);
 	}
 </script>
 

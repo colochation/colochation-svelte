@@ -6,25 +6,34 @@
 	import { api } from '../api';
 	import { createEventDispatcher } from 'svelte';
 
-	export let task: housework = {
-		title: '',
-		toDo: true,
-		assigned: ''
+	function emptyTask(): housework {
+		return {
+			title: '',
+			toDo: true,
+			assigned: ''
+		}
 	};
+
+	export let task = emptyTask();
 	export let showDialog = true;
 	let dialog: HTMLDialogElement;
 
 	$: if(dialog && showDialog) dialog.showModal()
 	$: if(dialog && !showDialog) dialog.close()
 
+	$: isTaskValid = task.title.trim() !== '' && task.assigned !== '';
+	$: buttonDisabled = !isTaskValid;
+
 	const dispatch = createEventDispatcher();
 
 	async function handleSubmit() {
-		// TODO not submit if title empty or nobody selected
-		const response = await fetch(api.chores, { method: 'POST', body: JSON.stringify(task) })
+		const response = await fetch(api.chores, {
+			method: 'POST',
+			body: JSON.stringify(task),
+			headers: {'Content-Type': 'application/json;charset=UTF-8'}
+		})
 		if(response.status === 201) { // CREATED
 			dispatch('created', task)
-			showDialog = false;
 		} else {
 			dispatch('error', response)
 		}
@@ -37,11 +46,7 @@
 	}
 
 	function onDialogClose() {
-		task = {
-			title: '',
-			assigned: '',
-			toDo: true
-		}
+		task = emptyTask();
 		showDialog = false
 	}
 </script>
@@ -56,7 +61,7 @@
 		<input bind:value={task.title} placeholder='Nom de la tâche' autofocus>
 		<fieldset>
 			<AssignedSelector bind:selected={task.assigned}></AssignedSelector>
-			<AddHouseworkButton></AddHouseworkButton>
+			<AddHouseworkButton bind:isDisabled={buttonDisabled}></AddHouseworkButton>
 		</fieldset>
 	</form>
 </dialog>
@@ -73,7 +78,7 @@
 			max-width: 100% !important;
 			height: 50%;
 			border-radius: 10px 10px 0 0;
-			box-shadow: 0px -9px 20px 5px #00000020;
+			box-shadow: 0 -9px 20px 5px #00000020;
 	}
 
 	dialog::backdrop {
