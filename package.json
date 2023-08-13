@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev",
+    "dev-host": "npm run dev -- --host --port 5173",
     "build": "vite build",
     "preview": "vite preview",
     "test": "playwright test",

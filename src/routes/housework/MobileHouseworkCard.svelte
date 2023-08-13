@@ -2,12 +2,15 @@
 
 	import type { housework } from '../housework.type';
 
-	export let task: housework = { assigned: '', title: '', toDo: true }
+	export let task: housework = { title: '', assigned: '', toDo: true }
+
+	$: titleIsEmpty = task.title === '';
+	$: titleDisplayed = titleIsEmpty ? 'Nom de la tâche' : task.title.trim();
 </script>
 
 <section class='card'>
-	<input type='checkbox' bind:checked={task.toDo} />
-	<h2>{task.title.trim()}</h2>
+	<input type='checkbox' />
+	<h2 class={titleIsEmpty ? 'newTask' : ''}>{titleDisplayed}</h2>
 	<span>{task.assigned}</span>
 	<hr/>
 </section>
@@ -20,6 +23,10 @@
         align-self: center;
         margin: 0;
         grid-area: 1 / 2 / 2 / 3;
+    }
+
+    .newTask {
+        color: #ACACAC;
     }
 
     .card {
@@ -47,7 +54,6 @@
 		}
 
 		hr {
-				background-color: black ;
         grid-area: 3 / 2 / 4 / 3;
 				width: 100%;
 				border: 1px solid #efefef;
