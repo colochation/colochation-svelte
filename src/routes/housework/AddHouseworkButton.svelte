@@ -27,6 +27,10 @@
 
 	button:disabled {
 			background-color: #b9eeb1;
+      border: none;
+      height: 50px;
+      width: 50px;
+      border-radius: 50px;
 	}
 
 	img {
