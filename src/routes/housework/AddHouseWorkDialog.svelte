@@ -4,13 +4,17 @@
 	import AssignedSelector from './AssignedSelector.svelte';
 	import type { housework } from '../housework.type';
 	import { api } from '../api';
+	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
+  import type { SubmitFunction } from '@sveltejs/kit';
+
 
 	function emptyTask(): housework {
-		return {
-			title: '',
-			toDo: true,
-			assigned: ''
+        return {
+            id: '',
+            title: '',
+						toDo: true,
+						assigned: ''
 		}
 	};
 
@@ -26,19 +30,6 @@
 
 	const dispatch = createEventDispatcher();
 
-	async function handleSubmit() {
-		const response = await fetch(api.chores, {
-			method: 'POST',
-			body: JSON.stringify(task),
-			headers: {'Content-Type': 'application/json;charset=UTF-8'}
-		})
-		if(response.status === 201) { // CREATED
-			dispatch('created', task)
-		} else {
-			dispatch('error', response)
-		}
-	}
-
 	function escapeDialog(event: KeyboardEvent): void {
 		if(event.repeat) return;
 		if(event.key === 'Escape') showDialog = false;
@@ -49,6 +40,15 @@
 		task = emptyTask();
 		showDialog = false
 	}
+
+	const handleSubmit: SubmitFunction = () => {
+      return async ({ result, update }) => {
+          if(result.type === 'success') dispatch('created', result?.data?.created)
+          else if(result.type === 'error') dispatch('error', result?.error)
+          await update({ reset: false });
+      };
+  }
+
 </script>
 
 <dialog
@@ -57,8 +57,11 @@
 				on:click|self={() => dialog.close()}
 				on:keyup={escapeDialog}
 >
-	<form on:submit|preventDefault={handleSubmit}>
-		<input bind:value={task.title} placeholder='Nom de la tâche' autofocus>
+	<form method='POST'
+				action='?/create'
+				use:enhance={handleSubmit}
+	>
+		<input name='title' bind:value={task.title} placeholder='Nom de la tâche' autofocus>
 		<fieldset>
 			<AssignedSelector bind:selected={task.assigned}></AssignedSelector>
 			<AddHouseworkButton bind:isDisabled={buttonDisabled}></AddHouseworkButton>

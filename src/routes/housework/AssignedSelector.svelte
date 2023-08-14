@@ -6,7 +6,7 @@
 </script>
 <span>
 	{icon}
-	<select bind:value={selected}>
+	<select name='assigned' bind:value={selected}>
 		<option value="" disabled selected hidden>Personne assignée</option>
 		{#each housemates as mate}
 			<option value={mate}>{mate}</option>

@@ -3,8 +3,8 @@ import { api } from '../api';
 import type { housework } from '../housework.type';
 
 export const load = (async ({ fetch }) => {
-	const chores = await fetch(api.chores);
+	const response = await fetch(api.chores);
 	return {
-		chores: await chores.json()
+		chores: (await response.json()).filter((t: housework) => t.toDo === true)
 	};
 }) as PageLoad;

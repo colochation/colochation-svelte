@@ -1,20 +1,23 @@
 <script lang="ts">
 	// noinspection TypeScriptCheckImport
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
 	import type { housework } from '../housework.type';
 	import MobileHouseworkCard from './MobileHouseworkCard.svelte';
 	import OpenAddHouseworkButton from './OpenAddHouseworkButton.svelte';
 	import AddHouseWorkDialog from './AddHouseWorkDialog.svelte';
+  import { flip } from 'svelte/animate';
 
 	export let data: PageData;
 	export let tasks: housework[] = data.chores;
+	export let form: ActionData;
 
 	let showDialog = false;
 	function emptyTask(): housework {
-		return {
-			title: '',
-			toDo: true,
-			assigned: ''
+        return {
+            id: '',
+						title: '',
+						toDo: true,
+						assigned: ''
 		}
 	};
 	let newTask = emptyTask();
@@ -32,6 +35,16 @@
 		// TODO handle error
 		console.log(event.detail);
 	}
+
+	function removeTask(event: CustomEvent<housework>) {
+        const id = event?.detail.id;
+        tasks = tasks.filter(t => t.id !== id);
+	}
+
+  function doneError(event: CustomEvent<Response>) {
+      // TODO handle error
+      console.log(event);
+  }
 </script>
 
 
@@ -40,8 +53,14 @@
 	{#if showDialog}
 		<li><MobileHouseworkCard task={newTask} /></li>
 	{/if}
-	{#each tasks as task}
-		<li><MobileHouseworkCard task={task} /></li>
+	{#each tasks as task (task)}
+		<li animate:flip>
+			<MobileHouseworkCard
+				task={task}
+				on:done={removeTask}
+				on:error={doneError}
+		/>
+		</li>
 	{/each}
 </ul>
 {#if !showDialog}
