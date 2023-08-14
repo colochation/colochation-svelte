@@ -1,6 +1,6 @@
 <script lang="ts">
 	// noinspection TypeScriptCheckImport
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
 	import type { housework } from '../housework.type';
 	import MobileHouseworkCard from './MobileHouseworkCard.svelte';
 	import OpenAddHouseworkButton from './OpenAddHouseworkButton.svelte';
@@ -8,6 +8,10 @@
 
 	export let data: PageData;
 	export let tasks: housework[] = data.chores;
+	export let form: ActionData;
+
+	$: if(form?.success) newChoreCreated(form.created);
+	$: if(form?.error) creationError(form.error);
 
 	let showDialog = false;
 	function emptyTask(): housework {
