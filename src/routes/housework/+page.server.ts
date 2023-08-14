@@ -3,7 +3,7 @@ import { api } from '../api';
 import { fail } from '@sveltejs/kit';
 
 export const actions = {
-	create: async ({ cookies, request }) => {
+    create: async ({ cookies, request }) => {
 		const data = await request.formData();
 		const task = {title: data.get('title'), assigned: data.get('assigned')}
 
@@ -19,4 +19,18 @@ export const actions = {
 
 		return { success: true, created: await response.json() }
 	},
+    done: async ({ cookies, request }) => {
+        const data = await request.formData();
+				const id = data.get('id');
+        const response = await fetch(`${api.chores}/${id}`,
+						{
+							method: 'PATCH',
+							headers: {'Content-Type': 'application/json;charset=UTF-8'}
+						})
+        if(response.status !== 200) { // OK
+            return fail(response.status, {error: await response.json()})
+        }
+
+        return { success: true, done: await response.json() }
+    }
 } satisfies Actions;

@@ -6,13 +6,15 @@
 	import { api } from '../api';
 	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
+  import type { SubmitFunction } from '@sveltejs/kit';
 
 
 	function emptyTask(): housework {
-		return {
-			title: '',
-			toDo: true,
-			assigned: ''
+        return {
+            id: '',
+            title: '',
+						toDo: true,
+						assigned: ''
 		}
 	};
 
@@ -39,6 +41,14 @@
 		showDialog = false
 	}
 
+	const handleSubmit: SubmitFunction = () => {
+      return async ({ result, update }) => {
+          if(result.type === 'success') dispatch('created', result?.data?.created)
+          else if(result.type === 'error') dispatch('error', result?.error)
+          await update({ reset: false });
+      };
+  }
+
 </script>
 
 <dialog
@@ -49,13 +59,7 @@
 >
 	<form method='POST'
 				action='?/create'
-				use:enhance={() => {
-						return async ({ result, update }) => {
-							if(result.type === 'success') dispatch('created', result?.data?.created)
-							else if(result.type === 'error') dispatch('error', result?.error)
-							await update({ reset: false });
-						};
-				}}
+				use:enhance={handleSubmit}
 	>
 		<input name='title' bind:value={task.title} placeholder='Nom de la tâche' autofocus>
 		<fieldset>

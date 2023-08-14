@@ -1,19 +1,41 @@
 <script lang='ts'>
 
 	import type { housework } from '../housework.type';
+  import type { SubmitFunction } from '@sveltejs/kit';
+  import { enhance } from '$app/forms';
+  import { createEventDispatcher } from 'svelte';
 
-	export let task: housework = { title: '', assigned: '', toDo: true }
+	export let task: housework = { id: '', title: '', assigned: '', toDo: true }
 
 	$: titleIsEmpty = task.title === '';
 	$: titleDisplayed = titleIsEmpty ? 'Nom de la tâche' : task.title.trim();
+
+	let form: HTMLFormElement;
+
+  const dispatch = createEventDispatcher();
+
+  const handleSubmit: SubmitFunction = () => {
+      return async ({ result, update }) => {
+          if(result.type === 'success') dispatch('done', result?.data?.done)
+          else if(result.type === 'error') dispatch('error', result?.error)
+          await update({ reset: false });
+      };
+  }
 </script>
 
-<section class='card'>
-	<input type='checkbox' />
+<form
+	method='POST'
+	action='?/done'
+	class='card'
+	bind:this={form}
+	use:enhance={handleSubmit}
+>
+	<input type='hidden' name='id' value={task.id} />
+	<input type='checkbox' on:mouseup={() => form.requestSubmit()}/>
 	<h2 class={titleIsEmpty ? 'newTask' : ''}>{titleDisplayed}</h2>
 	<span>{task.assigned}</span>
 	<hr/>
-</section>
+</form>
 
 <style>
 
