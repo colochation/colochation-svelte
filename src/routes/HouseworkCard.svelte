@@ -9,10 +9,7 @@
 
 </script>
 <section class='card'>
-	<section>
-		<input type='checkbox'/>
-		<h2>{task.title.trim()}</h2>
-	</section>
+	<h2>{task.title.trim()}</h2>
 	<span>{task.assigned}</span>
 </section>
 
@@ -21,17 +18,13 @@
         background-color: #fff;
         border-radius: 3px;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-        padding: 10px;
+        padding: 15px;
         margin: 13px 0;
-        height: 70px;
+        height: 55px;
         display: grid;
         grid-template-rows: 1fr 1fr;
     }
 
-    .card > section {
-        display: flex;
-        align-items: center;
-    }
 
     .card > span {
         justify-self: end;
@@ -48,7 +41,6 @@
         font-size: 20px;
         margin: 0;
         align-self: center;
-        margin-left: 15px;
     }
 </style>
 

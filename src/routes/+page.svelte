@@ -2,9 +2,13 @@
 	import Housework from './Housework.svelte';
 	import Grocerylist from './Grocerylist.svelte';
 	import Guests from './Guests.svelte';
+	import type { Guest as GuestType } from './guest.type';
 	import { time } from './time';
 	// noinspection TypeScriptCheckImport
 	import type { PageData } from './$types';
+	import type { housework } from './housework.type';
+	import * as api from './api'
+	import type { grocerylistItem } from './grocery-list.type';
 
 	const clockFormatter = new Intl.DateTimeFormat('fr', {
 		hour12: false,
@@ -21,11 +25,29 @@
 	
 	export let data: PageData;
 
+	let tasks: housework[] = data.chores;
+	let groceries: grocerylistItem[] = data.groceries;
+	let guests: GuestType[] = data.guests;
+
+	async function refresh() {
+		changeEmoji();
+		[tasks, groceries, guests] = await Promise
+			.all([api.getChores(),api.getGroceries(), api.getGuests()])
+
+	}
+	setInterval(refresh, 5_000)
+
+	const emojies = ['🐈', '🐅', '🦓', '🐆', '🦒', '🦇', '🦦', '🦥']
+	let emoji = '🐈';
+	function changeEmoji() {
+		emoji = emojies[Math.floor(Math.random() * emojies.length)]
+	}
+
 
 </script>
 
 <header>
-	<span id='cat'>🐈</span>
+	<span id='cat'>{emoji}</span>
 	<div>
 		<span>{dateFormatter.format($time).toUpperCase()}</span>
 		<span>{clockFormatter.format($time)}</span>
@@ -33,9 +55,9 @@
 </header>
 
 <main>
-	<Housework tasks={data.chores} />
-	<Grocerylist groceryList={data.groceries} />
-	<Guests guests={data.guests} />
+	<Housework bind:tasks={tasks} />
+	<Grocerylist groceryList={groceries} />
+	<Guests guests={guests} />
 </main>
 
 <style>
@@ -43,7 +65,7 @@
         display: flex;
         align-items: center;
         padding: 0 40px;
-        font-size: 64px;
+        font-size: 50px;
         font-weight: bold;
         margin-bottom: 20px;
     }

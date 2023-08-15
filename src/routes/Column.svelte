@@ -5,7 +5,9 @@
 
 <section>
 	<h1><span class='icon'>{icon}</span> {title}</h1>
-	<slot></slot>
+	<div class='scrollable'>
+		<slot></slot>
+	</div>
 </section>
 
 <style>
@@ -18,6 +20,27 @@
         min-width: 400px;
         padding: 20px 25px;
     }
+
+	.scrollable {
+		overflow-y: auto;
+	}
+
+	.scrollable::-webkit-scrollbar-track
+	{
+		background-color: transparent;
+	}
+
+	.scrollable::-webkit-scrollbar
+	{
+		width: 10px;
+		background-color: transparent;
+	}
+
+	.scrollable::-webkit-scrollbar-thumb
+	{
+      border-radius: 10px;
+      background: linear-gradient(163.44deg, rgba(211, 82, 201, 0.3) 1.85%, rgba(28, 228, 255, 0.3) 95.81%);
+	}
 
     h1 {
         font-weight: bold;
