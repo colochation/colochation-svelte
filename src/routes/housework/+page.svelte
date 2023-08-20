@@ -50,9 +50,6 @@
 
 <h1><span class='icon'>🧹</span> Tâches ménagères</h1>
 <ul>
-	{#if showDialog}
-		<li><MobileHouseworkCard task={newTask} /></li>
-	{/if}
 	{#each tasks as task (task)}
 		<li animate:flip>
 			<MobileHouseworkCard
