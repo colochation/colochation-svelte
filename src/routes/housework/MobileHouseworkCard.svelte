@@ -17,10 +17,14 @@
   const handleSubmit: SubmitFunction = () => {
       return async ({ result, update }) => {
           if(result.type === 'success') dispatch('done', result?.data?.done)
-          else if(result.type === 'error') dispatch('error', result?.error)
+          else dispatch('error', result)
           await update({ reset: false });
       };
   }
+
+	function update() {
+		dispatch('update', task)
+	}
 </script>
 
 <form
@@ -32,8 +36,10 @@
 >
 	<input type='hidden' name='id' value={task.id} />
 	<input type='checkbox' on:mouseup={() => form.requestSubmit()}/>
-	<h2 class={titleIsEmpty ? 'newTask' : ''}>{titleDisplayed}</h2>
-	<span>{task.assigned}</span>
+	<fieldset on:click={update}>
+		<h2 class={titleIsEmpty ? 'newTask' : ''}>{titleDisplayed}</h2>
+		<span>{task.assigned}</span>
+	</fieldset>
 	<hr/>
 </form>
 

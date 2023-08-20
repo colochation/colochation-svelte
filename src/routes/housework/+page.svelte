@@ -6,6 +6,7 @@
 	import OpenAddHouseworkButton from './OpenAddHouseworkButton.svelte';
 	import AddHouseWorkDialog from './AddHouseWorkDialog.svelte';
   import { flip } from 'svelte/animate';
+  import type { ActionResult } from '@sveltejs/kit';
 
 	export let data: PageData;
 	export let tasks: housework[] = data.chores;
@@ -20,20 +21,25 @@
 						assigned: ''
 		}
 	};
-	let newTask = emptyTask();
-	function onClickCta() {
+	let dialogTask = emptyTask();
+	function openDialogCreateMode() {
+		showDialog = true
+	}
+
+	function openDialogUpdateMode(task: housework) {
+		dialogTask = task
 		showDialog = true
 	}
 
 	function newChoreCreated(event: CustomEvent<housework>) {
 		const createdTask: housework = event.detail;
 		tasks = [structuredClone(createdTask), ...tasks];
-		newTask = emptyTask();
+		dialogTask = emptyTask();
 	}
 
-	function creationError(event: CustomEvent<Response>) {
+	function saveError(result: CustomEvent<ActionResult>) {
 		// TODO handle error
-		console.log(event.detail);
+		console.log(result);
 	}
 
 	function removeTask(event: CustomEvent<housework>) {
@@ -41,10 +47,16 @@
         tasks = tasks.filter(t => t.id !== id);
 	}
 
-  function doneError(event: CustomEvent<Response>) {
+  function doneError(event: CustomEvent<ActionResult>) {
       // TODO handle error
-      console.log(event);
   }
+
+	function openDialogToUpdateTask(event: CustomEvent<housework>) {
+		if(!event?.detail) {
+			// TODO handle error
+		}
+		openDialogUpdateMode(event.detail)
+	}
 </script>
 
 
@@ -56,19 +68,20 @@
 				task={task}
 				on:done={removeTask}
 				on:error={doneError}
+				on:update={openDialogToUpdateTask}
 		/>
 		</li>
 	{/each}
 </ul>
 {#if !showDialog}
-	<OpenAddHouseworkButton on:click={onClickCta} ></OpenAddHouseworkButton>
+	<OpenAddHouseworkButton on:click={openDialogCreateMode} ></OpenAddHouseworkButton>
 {/if}
 
 <AddHouseWorkDialog
 	bind:showDialog
-	bind:task={newTask}
+	bind:task={dialogTask}
 	on:created={newChoreCreated}
-	on:error={creationError}
+	on:error={saveError}
 ></AddHouseWorkDialog>
 
 
