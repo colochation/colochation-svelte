@@ -39,12 +39,11 @@
 
   function choreUpdated(event: CustomEvent<housework>) {
       const updatedTask: housework = event.detail;
-      tasks = updateTaskInArray(updatedTask);
+      tasks = getTasksWithUpdated(updatedTask);
   }
 
-  function updateTaskInArray(updated: housework): housework[] {
-			const arrayWithoutOldTask = tasks.filter(t => t.id !== updated.id)
-			return [structuredClone(updated), ... arrayWithoutOldTask]
+  function getTasksWithUpdated(updated: housework): housework[] {
+			return tasks.map(t => t.id === updated.id ? updated : t);
 	}
 
 	function saveError(result: CustomEvent<ActionResult>) {
