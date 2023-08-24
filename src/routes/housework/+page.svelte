@@ -37,6 +37,16 @@
 		dialogTask = emptyTask();
 	}
 
+  function choreUpdated(event: CustomEvent<housework>) {
+      const updatedTask: housework = event.detail;
+      tasks = updateTaskInArray(updatedTask);
+  }
+
+  function updateTaskInArray(updated: housework): housework[] {
+			const arrayWithoutOldTask = tasks.filter(t => t.id !== updated.id)
+			return [structuredClone(updated), ... arrayWithoutOldTask]
+	}
+
 	function saveError(result: CustomEvent<ActionResult>) {
 		// TODO handle error
 		console.log(result);
@@ -81,6 +91,7 @@
 	bind:showDialog
 	bind:task={dialogTask}
 	on:created={newChoreCreated}
+	on:updated={choreUpdated}
 	on:error={saveError}
 ></AddHouseWorkDialog>
 
