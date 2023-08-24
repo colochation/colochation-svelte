@@ -9,6 +9,9 @@
   import type { SubmitFunction } from '@sveltejs/kit';
 
 
+	type Mode = 'create' | 'update';
+	type EventName = 'created' | 'updated';
+
 	function emptyTask(): housework {
         return {
             id: '',
@@ -28,6 +31,10 @@
 	$: isTaskValid = task.title.trim() !== '' && task.assigned !== '';
 	$: buttonDisabled = !isTaskValid;
 
+	let mode: Mode = 'create';
+	$: mode = task.id === '' ? 'create' : 'update';
+
+
 	const dispatch = createEventDispatcher();
 
 	function escapeDialog(event: KeyboardEvent): void {
@@ -43,10 +50,21 @@
 
 	const handleSubmit: SubmitFunction = () => {
       return async ({ result, update }) => {
-          if(result.type === 'success') dispatch('created', result?.data?.created)
-          else if(result.type === 'error') dispatch('error', result?.error)
+          if(result.type === 'success') {
+              switch (mode) {
+                  case 'create': return dispatchWithEventName('created', result?.data?.created);
+                  case 'update': return dispatchWithEventName('updated', result?.data?.updated);
+                  default: return;
+              }
+					}
+          else dispatch('error', result)
           await update({ reset: false });
       };
+
+  }
+
+  function dispatchWithEventName (eventName: EventName, task: housework): void {
+      dispatch(eventName, task)
   }
 
 </script>
@@ -58,9 +76,10 @@
 				on:keyup={escapeDialog}
 >
 	<form method='POST'
-				action='?/create'
+				action='?/{mode}'
 				use:enhance={handleSubmit}
 	>
+		<input name='id' type='hidden' bind:value={task.id}>
 		<input name='title' bind:value={task.title} placeholder='Nom de la tâche' autofocus>
 		<fieldset>
 			<AssignedSelector bind:selected={task.assigned}></AssignedSelector>
